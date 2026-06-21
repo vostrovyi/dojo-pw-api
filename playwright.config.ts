@@ -25,7 +25,7 @@ export default defineConfig({
   projects: [
     {
       name: "fakeapi.platzi",
-      use: {},
+      use: {baseURL: "https://api.escuelajs.co"},
     },
   ],
 });

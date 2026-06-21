@@ -19,7 +19,7 @@ function generateRandomProductTitle(): string {
 
 test("Get products", async ({ request }) => {
   const response = await request.get(
-    "https://api.escuelajs.co/api/v1/products",
+    "/api/v1/products",
     { failOnStatusCode: true },
   );
   expect(response.status()).toBe(200);
@@ -30,7 +30,7 @@ test("Create product", async ({ request }) => {
   let description = generateRandomProductTitle();
 
   const response = await request.post(
-    "https://api.escuelajs.co/api/v1/products",
+    "/api/v1/products",
     {
       data: {
         title: title,
@@ -55,7 +55,7 @@ test("Create product", async ({ request }) => {
 
   // Check product exists
   const responseGetById = await request.get(
-    `https://api.escuelajs.co/api/v1/products/${productId}`,
+    `/api/v1/products/${productId}`,
     { failOnStatusCode: true },
   );
   expect(responseGetById.status()).toBe(200);
@@ -64,7 +64,7 @@ test("Create product", async ({ request }) => {
 
   // Clean Up
   const responseDel = await request.delete(
-    `https://api.escuelajs.co/api/v1/products/${productId}`,
+    `/api/v1/products/${productId}`,
     { failOnStatusCode: true },
   );
   expect(response).toBeOK(); // only for 2xx;
@@ -77,7 +77,7 @@ test("Update product", async ({ request }) => {
   let description = generateRandomProductTitle();
 
   const responsePost = await request.post(
-    "https://api.escuelajs.co/api/v1/products",
+    "/api/v1/products",
     {
       failOnStatusCode: true,
       data: {
@@ -101,7 +101,7 @@ test("Update product", async ({ request }) => {
   let updatedDescription = generateRandomProductTitle();
 
   const responsePut = await request.put(
-    `https://api.escuelajs.co/api/v1/products/${productId}`,
+    `/api/v1/products/${productId}`,
     {
       failOnStatusCode: true,
       data: {
@@ -122,7 +122,7 @@ test("Update product", async ({ request }) => {
 
   // Clean Up
   const responseDel = await request.delete(
-    `https://api.escuelajs.co/api/v1/products/${productId}`,
+    `/api/v1/products/${productId}`,
     { failOnStatusCode: true },
   );
   expect(responseDel).toBeOK(); // only for 2xx;
@@ -134,7 +134,7 @@ test("Delete product", async ({ request }) => {
   let title = generateRandomProductTitle();
 
   const responsePost = await request.post(
-    "https://api.escuelajs.co/api/v1/products",
+    "/api/v1/products",
     {
       failOnStatusCode: true,
       data: {
@@ -154,7 +154,7 @@ test("Delete product", async ({ request }) => {
 
   // Delete product
   const responseDel = await request.delete(
-    `https://api.escuelajs.co/api/v1/products/${productId}`,
+    `/api/v1/products/${productId}`,
     { failOnStatusCode: true },
   );
   expect(responseDel).toBeOK(); // only for 2xx;
@@ -162,7 +162,7 @@ test("Delete product", async ({ request }) => {
 
   // Check product NOT exists
   const responseGetById = await request.get(
-    `https://api.escuelajs.co/api/v1/products/${productId}`
+    `/api/v1/products/${productId}`
   );
   const jsonGet = await responseGetById.json();
   // expect(responseGetById.status()).toBe(404);
