@@ -58,8 +58,10 @@ test("Create product", async ({ request }) => {
     `/api/v1/products/${productId}`,
     { failOnStatusCode: true },
   );
+  const jsonGetById = await responseGetById.json();
+
   expect(responseGetById.status()).toBe(200);
-  expect(json).toHaveProperty("id", productId);
+  expect(jsonGetById).toHaveProperty("id", productId);
   
 
   // Clean Up
@@ -67,7 +69,7 @@ test("Create product", async ({ request }) => {
     `/api/v1/products/${productId}`,
     { failOnStatusCode: true },
   );
-  expect(response).toBeOK(); // only for 2xx;
+  expect(responseDel).toBeOK(); // only for 2xx;
   expect(responseDel.status()).toBe(200)
 });
 
@@ -168,4 +170,90 @@ test("Delete product", async ({ request }) => {
   // expect(responseGetById.status()).toBe(404);
   expect(jsonGet.name).toBe("EntityNotFoundError")
 
+});
+
+test("Get a single product by id", async ({ request }) => {
+  // Create product
+  let title = generateRandomProductTitle();
+
+  const responsePost = await request.post(
+    "/api/v1/products",
+    {
+      failOnStatusCode: true,
+      data: {
+        title: title,
+        slug: "handmade-fresh-table",
+        price: 123,
+        description: generateRandomProductTitle(),
+        categoryId: 1,
+        images: ["https://placehold.co/600x400"]
+      }
+    }
+  );
+  const jsonPost = await responsePost.json();
+  const productId = jsonPost.id;
+  expect(responsePost.status()).toBe(201);
+  expect(responsePost.statusText()).toMatch("Created");
+
+  // Get a single product by id
+  const responseGetById = await request.get(
+    `/api/v1/products/${productId}`,
+    { failOnStatusCode: true },
+  );
+  const jsonGetById = await responseGetById.json();
+
+  expect(responseGetById.status()).toBe(200);
+  expect(jsonGetById).toHaveProperty("id", productId);
+  expect(jsonGetById).toHaveProperty("title", title);
+
+
+  // Clean Up
+  const responseDel = await request.delete(
+    `/api/v1/products/${productId}`,
+    { failOnStatusCode: true },
+  );
+  expect(responseDel).toBeOK(); // only for 2xx;
+  expect(responseDel.status()).toBe(200)
+});
+
+test("Get a single product by slug", async ({ request }) => {
+  // Create product
+  let title = generateRandomProductTitle();
+  let slug = title.toLocaleLowerCase();
+
+  const responsePost = await request.post(
+    "/api/v1/products",
+    {
+      failOnStatusCode: true,
+      data: {
+        title: title,
+        slug: title,
+        price: 123,
+        description: generateRandomProductTitle(),
+        categoryId: 1,
+        images: ["https://placehold.co/600x400"]
+      }
+    }
+  );
+  const jsonPost = await responsePost.json();
+  const productId = jsonPost.id;
+  expect(responsePost.status()).toBe(201);
+  expect(responsePost.statusText()).toMatch("Created");
+  expect(jsonPost.slug).toBe(slug);
+
+  // Get a single product by slug
+  const responseGetBySlug = await request.get(`/api/v1/products/slug/${slug}`);
+  const jsonGetBySlug = await responseGetBySlug.json();
+  expect(responseGetBySlug.status()).toBe(200);
+  expect(jsonGetBySlug).toHaveProperty("id", productId);
+  expect(jsonGetBySlug).toHaveProperty("title", title);
+  expect(jsonGetBySlug).toHaveProperty("slug", slug);
+
+  // Clean Up
+  const responseDel = await request.delete(
+    `/api/v1/products/${productId}`,
+    { failOnStatusCode: true },
+  );
+  expect(responseDel).toBeOK(); // only for 2xx;
+  expect(responseDel.status()).toBe(200)
 });
