@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-function generateRandomProductTitle(): string {
+function generateRandomString(): string {
   const minLength = 3;
   const maxLength = 20;
   const length =
@@ -58,12 +58,12 @@ test.describe("Products tests with Clean Up(?)", {tag: ["@products", "@cleanUp"]
     test.beforeEach(async ({ request }) => {
       //! ARRANGE
       uniqueTitle = await test.step("Generate unique title", async () => {
-        return generateRandomProductTitle();
+        return generateRandomString();
       });
 
       const uniqueDescription =
         await test.step("Generate unique description", async () => {
-          return generateRandomProductTitle();
+          return generateRandomString();
         });
 
       const responseCreate =
@@ -102,8 +102,8 @@ test.describe("Products tests with Clean Up(?)", {tag: ["@products", "@cleanUp"]
     });
 
     test("Update product", async ({ request }) => {
-      let updatedTitle = generateRandomProductTitle();
-      let updatedDescription = generateRandomProductTitle();
+      let updatedTitle = generateRandomString();
+      let updatedDescription = generateRandomString();
 
       //! ACT
       await test.step("Update product title and description", async () => {
@@ -176,12 +176,12 @@ test.describe("Create products", { tag: ["@products", "@cleanUp"] }, () => {
   test.beforeEach(async ({ request }) => {
     //! ARRANGE
     uniqueTitle = await test.step("Generate unique title", async () => {
-      return generateRandomProductTitle();
+      return generateRandomString();
     });
 
     uniqueDescription =
       await test.step("Generate unique description", async () => {
-        return generateRandomProductTitle();
+        return generateRandomString();
       });
   });
   test.afterEach(async ({ request }) => {
@@ -240,12 +240,12 @@ test.describe("Delete products", { tag: ["@products"] }, () => {
   test.beforeEach(async ({ request }) => {
     //! ARRANGE
     uniqueTitle = await test.step("Generate unique title", async () => {
-      return generateRandomProductTitle();
+      return generateRandomString();
     });
 
     const uniqueDescription =
       await test.step("Generate unique description", async () => {
-        return generateRandomProductTitle();
+        return generateRandomString();
       });
 
     const responseCreate =
@@ -303,10 +303,10 @@ test.describe("Get products related by id", { tag: ["@products"] }, () => {
       for (let i = 0; i < 3; i++) {
         const responsePost = await request.post("/api/v1/products", {
           data: {
-            title: generateRandomProductTitle(),
+            title: generateRandomString(),
             slug: "handmade-fresh-table",
             price: 123,
-            description: generateRandomProductTitle(),
+            description: generateRandomString(),
             categoryId: 3,
             images: ["https://placehold.co/600x400"],
           },
