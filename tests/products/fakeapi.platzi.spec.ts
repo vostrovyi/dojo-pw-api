@@ -57,6 +57,84 @@ test.describe("Products API - GET Methods", { tag: ["@products", "@get"] }, () =
       expect(json).toHaveLength(10);
     });
   });
+
+  test.fixme("Fake test #1 - fix me", async ({ request }) => {
+    //! ACT
+    let response: APIResponse;
+    await test.step("Execute GET request for all products", async () => {
+      response = await request.get("/api/v1/products", {
+        failOnStatusCode: true,
+      });
+    });
+
+    //! ASSERT
+    await test.step("Verify response status", async () => {
+      expect(response.status()).toBe(200);
+    });
+  });
+
+  test.skip("Fake test #2 - skip", async ({ request }) => {
+    //! ACT
+    let response: APIResponse;
+    await test.step("Execute GET request for all products", async () => {
+      response = await request.get("/api/v1/products", {
+        failOnStatusCode: true,
+      });
+    });
+
+    //! ASSERT
+    await test.step("Verify response status", async () => {
+      expect(response.status()).toBe(200);
+    });
+  });
+
+  test.fail("Fake test #3 - fail", async ({ request }) => {
+    //! ACT
+    let response: APIResponse;
+    await test.step("Execute GET request for all products", async () => {
+      response = await request.get("/api/v1/products", {
+        failOnStatusCode: true,
+      });
+    });
+
+    //! ASSERT
+    await test.step("Verify response status", async () => {
+      expect(response.status()).toBe(500);
+    });
+  });
+
+  test("Fake test #4 - slowmo", async ({ request }) => {
+    test.slow();
+
+    //! ACT
+    let response: APIResponse;
+    await test.step("Execute GET request for all products", async () => {
+      response = await request.get("/api/v1/products", {
+        failOnStatusCode: true,
+      });
+    });
+
+    //! ASSERT
+    await test.step("Verify response status", async () => {
+      expect(response.status()).toBe(200);
+    });
+  });
+
+  // test.only("Fake test #5 - only", async ({ request }) => {
+
+  //   //! ACT
+  //   let response: APIResponse;
+  //   await test.step("Execute GET request for all products", async () => {
+  //     response = await request.get("/api/v1/products", {
+  //       failOnStatusCode: true,
+  //     });
+  //   });
+
+  //   //! ASSERT
+  //   await test.step("Verify response status", async () => {
+  //     expect(response.status()).toBe(200);
+  //   });
+  // });
 });
 
 // ==========================================================
