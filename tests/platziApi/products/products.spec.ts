@@ -1,4 +1,5 @@
 import { test, expect, APIResponse } from "@playwright/test";
+import { TAG } from "../../tags";
 
 function generateRandomString(): string {
   const minLength = 3;
@@ -16,7 +17,7 @@ function generateRandomString(): string {
 // ==========================================================
 // GET METHODS
 // ==========================================================
-test.describe("Products API - GET Methods", { tag: ["@products", "@get"] }, () => {
+test.describe("Products API - GET Methods", { tag: [TAG.product, TAG.get] }, () => {
 
   test("Get all products", async ({ request }) => {
     //! ARRANGE
@@ -140,7 +141,7 @@ test.describe("Products API - GET Methods", { tag: ["@products", "@get"] }, () =
 // ==========================================================
 // CREATE PRODUCT
 // ==========================================================
-test.describe("Products API - Create Product", { tag: ["@products", "@create"] }, () => {
+test.describe("Products API - Create Product", { tag: [TAG.product, TAG.create] }, () => {
   let productId: number | undefined; // ← одна на весь describe
   let uniqueTitle: string;
   let uniqueDescription: string;
@@ -213,7 +214,7 @@ test.describe("Products API - Create Product", { tag: ["@products", "@create"] }
 // ==========================================================
 // UPDATE AND RETRIEVE
 // ==========================================================
-test.describe("Products API - Update and Retrieve", { tag: ["@products", "@single"] }, () => {
+test.describe("Products API - Update and Retrieve", { tag: [TAG.product, TAG.single] }, () => {
   let productData: { id: number; slug: string };
   let uniqueTitle: string;
 
@@ -330,7 +331,7 @@ test.describe("Products API - Update and Retrieve", { tag: ["@products", "@singl
 // ==========================================================
 // DELETE OPERATION
 // ==========================================================
-test.describe("Products API - Delete Operation", { tag: ["@products", "@delete"] }, () => {
+test.describe("Products API - Delete Operation", { tag: [TAG.product, TAG.delete] }, () => {
   let productData: { id: number; slug: string };
 
   test.beforeEach(async ({ request }) => {
@@ -392,7 +393,7 @@ test.describe("Products API - Delete Operation", { tag: ["@products", "@delete"]
 // ==========================================================
 // RELATED PRODUCTS
 // ==========================================================
-test.describe("Products API - Related Products", { tag: ["@products", "@related"] }, () => {
+test.describe("Products API - Related Products", { tag: [TAG.product, TAG.related] }, () => {
   let productIds: number[] = [];
   //    : number[] —> TypeScript тип: масив, який містить тільки числа (number)
   //    = [] —> початкове значення: порожній масив
